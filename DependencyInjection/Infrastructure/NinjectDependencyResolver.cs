@@ -3,6 +3,7 @@ using Ninject;
 using DependencyInjection.Models;
 using System;
 using System.Collections.Generic;
+using Ninject.Web.Common;
 
 namespace DependencyInjection.Infrastructure
 {
@@ -27,8 +28,10 @@ namespace DependencyInjection.Infrastructure
 
         private void AddBindings()
         {
+            kernel.Bind<IValueCalculator>().To<LinqValuesCalculator>().InRequestScope();
             kernel.Bind<IValueCalculator>().To<LinqValuesCalculator>();
             kernel.Bind<IDiscountHelper>().To<DefaultDiscountHelper>().WithPropertyValue("DiscountSize",50M);
+            kernel.Bind<IDiscountHelper>().To<FlexibleDiscountHelper>().WhenInjectedInto<LinqValuesCalculator>();
         }
 
     }
