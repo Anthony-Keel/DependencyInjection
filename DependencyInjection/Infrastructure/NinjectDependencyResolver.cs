@@ -28,6 +28,8 @@ namespace DependencyInjection.Infrastructure
         private void AddBindings()
         {
             kernel.Bind<IValueCalculator>().To<LinqValuesCalculator>();
+            kernel.Bind<IDiscountHelper>().To<DefaultDiscountHelper>().WithPropertyValue("DiscountSize",50M);
         }
+
     }
 }
